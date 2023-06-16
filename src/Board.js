@@ -10,7 +10,7 @@ export default class Board extends React.Component {
     const clients = this.getClients();
     this.state = {
       clients: {
-        backlog: clients.filter(client => !client.status || client.status === 'backlog'),
+        backlog: clients.filter(client => client.status && client.status === 'backlog'),
         inProgress: clients.filter(client => client.status && client.status === 'in-progress'),
         complete: clients.filter(client => client.status && client.status === 'complete'),
       }
@@ -25,7 +25,7 @@ export default class Board extends React.Component {
     return [
       ['1','Stark, White and Abbott','Cloned Optimal Architecture', 'in-progress'],
       ['2','Wiza LLC','Exclusive Bandwidth-Monitored Implementation', 'complete'],
-      ['3','Nolan LLC','Vision-Oriented 4Thgeneration Graphicaluserinterface', 'backlog'],
+      ['3','Njbkjbolan LLC','Vision-Oriented 4Thgeneration Graphicaluserinterface', 'backlog'],
       ['4','Thompson PLC','Streamlined Regional Knowledgeuser', 'in-progress'],
       ['5','Walker-Williamson','Team-Oriented 6Thgeneration Matrix', 'in-progress'],
       ['6','Boehm and Sons','Automated Systematic Paradigm', 'backlog'],
@@ -50,11 +50,19 @@ export default class Board extends React.Component {
       status: companyDetails[3],
     }));
   }
+
+  dragulaDecorator = (componentBackingInstance) => {
+    if (componentBackingInstance) {
+      let options = { };
+      Dragula([componentBackingInstance], options);
+    }
+  };
   renderSwimlane(name, clients, ref) {
     return (
-      <Swimlane name={name} clients={clients} dragulaRef={ref}/>
+      <Swimlane name={name} clients={clients}/>
     );
   }
+  
 
   render() {
     return (
